@@ -38,7 +38,7 @@ public class TicketsService {
         }
 
 
-        return false;
+        return true;
     }
 
     private boolean isValidString(String text, int size, Boolean mandatory) {
