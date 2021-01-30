@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,16 +10,16 @@
 </head>
 <body>
 <h1>Form</h1>
-<form >
-    <p>reporter: <input type="text" /></p>
-    <p>project: <input type="text"  /></p>
-    <p>assignee: <input type="text" /></p>
-    <p>status: <input type="text"  /></p>
-    <p>subject: <input type="text"  /></p>
-    <p>description: <input type="text"   /></p>
-    <p>comments: <input type="text" /></p>
-    <p>file: <input type="image" /></p>
-    <p><input type="submit" value="Submit" />  /></p>
+<form action="#" th:action="@{/ticket/create}" th:object="${ticket}" method="post">
+    <p>reporter: <input type="text" th:field="*{reporter}" /></p>
+    <p>project: <input type="text" th:field="*{project}" /></p>
+    <p>assignee: <input type="text" th:field="*{assignee}"/></p>
+    <p>status: <input type="text" th:field="*{status}" /></p>
+    <p>subject: <input type="text" th:field="*{subject}" /></p>
+    <p>description: <input type="text"  th:field="*{description}" /></p>
+    <p>comments: <textarea rows="4" cols="50" th:field="*{comments}" ></textarea></p>
+    <p>file: <input type="file" th:field="*{files}" /></p>
+    <p><input type="submit" value="Submit" /> </p>
 </form>
 </body>
 </html>
