@@ -1,11 +1,16 @@
 package com.app.services;
 
+import com.app.dao.TicketsDao;
 import com.app.model.Ticket;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TicketsService {
+
+    @Autowired
+    private TicketsDao ticketsDao;
 
     public Boolean validateTicket(Ticket ticket){
         if (ticket == null || Strings.isBlank(ticket.getReporter())) {
@@ -28,6 +33,11 @@ public class TicketsService {
         }
 
         //TODO validate status
+        try{
+            Integer.valueOf(ticket.getStatus());
+        }catch (Exception ex){
+            return false;
+        }
 
         if (ticket.getComments() != null){
             for (String comment : ticket.getComments()){
@@ -39,6 +49,10 @@ public class TicketsService {
 
 
         return true;
+    }
+
+    public Boolean createTicket(Ticket ticket){
+        return ticketsDao.createTicket(ticket);
     }
 
     private boolean isValidString(String text, int size, Boolean mandatory) {
