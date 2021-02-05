@@ -4,14 +4,13 @@ import com.app.model.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.List;
 
 @Repository
 public class TicketsDao {
@@ -26,6 +25,32 @@ public class TicketsDao {
                         "VALUES (?, ?, ?, ?, ?, ?)",
                 projectId, reporterId, ticket.getSubject(), ticket.getDescription(), assigneeId, Integer.valueOf(ticket.getStatus()));
         return true;
+    }
+
+    public Ticket getTicket(int id) {
+        RowMapper<Ticket> rowMapper = (rs, rowNumber) -> mapTicket(rs);
+        List<Ticket> tickets = jdbcTemplate.query("SELECT t.id,t.subject,t.description, s.status, " +
+                "p.description as project, a.login as assignee, r.login as reporter " +
+                "FROM Tickets as t \n" +
+                "LEFT JOIN status as s on s.id=t.status\n" +
+                "LEFT JOIN projects as p on  p.id=t.project_id\n" +
+                "LEFT JOIN users as r on r.id = t.reporter_id\n" +
+                "LEFT JOIN users as a on r.id = t.assignee_id\n" +
+                "WHERE t.id = " + id, rowMapper);
+        return tickets.size() > 0 ? tickets.get(0) : null;
+
+    }
+
+    private Ticket mapTicket(ResultSet rs) throws SQLException {
+        Ticket ticket = new Ticket();
+        ticket.setId(rs.getInt("id"));
+        ticket.setSubject(rs.getString("subject"));
+        ticket.setDescription(rs.getString("description"));
+        ticket.setAssignee(rs.getString("assignee"));
+        ticket.setReporter(rs.getString("reporter"));
+        ticket.setStatus(rs.getString("status"));
+        ticket.setProject(rs.getString("project"));
+        return ticket;
     }
 
     public int createProject(Ticket ticket){

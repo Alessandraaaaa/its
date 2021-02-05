@@ -5,10 +5,7 @@ import com.app.services.TicketsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("ticket")
@@ -18,9 +15,15 @@ public class TicketsController {
     TicketsService ticketsService;
 
     @GetMapping("/registration")
-    public String getTicket(Model model){
+    public String getRegistration(Model model){
         model.addAttribute("ticket", new Ticket());
         return "registration";
+    }
+
+    @GetMapping("/{id}")
+    public String getTicket(Model model, @PathVariable("id")int id){
+        model.addAttribute("ticket", ticketsService.getTicket(id));
+        return "ticket";
     }
 
     @PostMapping("/create")

@@ -55,6 +55,10 @@ public class TicketsService {
         return ticketsDao.createTicket(ticket);
     }
 
+    public Ticket getTicket(int id){
+        return ticketsDao.getTicket(id);
+    }
+
     private boolean isValidString(String text, int size, Boolean mandatory) {
         if (mandatory && Strings.isBlank(text)){
             return false;
