@@ -1,6 +1,7 @@
 package com.app.services;
 
 import com.app.dao.TicketsDao;
+import com.app.model.Comment;
 import com.app.model.Ticket;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class TicketsService {
     private TicketsDao ticketsDao;
 
     public Boolean validateTicket(Ticket ticket){
-        if (ticket == null || Strings.isBlank(ticket.getReporter())) {
+        if (ticket == null || Strings.isBlank(ticket.getReporter().getLogin())) {
             return false;
         }
 
@@ -28,20 +29,20 @@ public class TicketsService {
             return false;
         }
 
-        if (!isValidString(ticket.getProject(), 50, true)) {
+        if (!isValidString(ticket.getProject().getDescription(), 50, true)) {
             return false;
         }
 
         //TODO validate status
         try{
-            Integer.valueOf(ticket.getStatus());
+            Integer.valueOf(ticket.getStatus().getStatus());
         }catch (Exception ex){
             return false;
         }
 
         if (ticket.getComments() != null){
-            for (String comment : ticket.getComments()){
-                if (!isValidString(comment, 500, false)) {
+            for (Comment comment : ticket.getComments()){
+                if (!isValidString(comment.getText(), 500, false)) {
                     return false;
                 }
             }
@@ -57,6 +58,10 @@ public class TicketsService {
 
     public Ticket getTicket(int id){
         return ticketsDao.getTicket(id);
+    }
+
+    public Ticket updateTicket(Ticket ticket){
+        return ticketsDao.updateTicket(ticket);
     }
 
     private boolean isValidString(String text, int size, Boolean mandatory) {

@@ -16,7 +16,7 @@
 <form action="#" th:action="@{/ticket/create}" th:object="${ticket}" method="post">
 
     <p>reporter: <input type="text" th:field="*{reporter}" /></p>
-    <p>project: <input type="text" th:field="*{project}" /></p>
+    <p>project: <input type="text" th:field="*{project.description}" /></p>
     <p>assignee: <input type="text" th:field="*{assignee}"/></p>
     <p>status: <input type="text" th:field="*{status}" /></p>
     <p>subject: <input type="text" th:field="*{subject}" /></p>

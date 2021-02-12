@@ -26,6 +26,12 @@ public class TicketsController {
         return "ticket";
     }
 
+    @PostMapping("/update")
+    public String updateTicket(Ticket ticket, Model model){
+        model.addAttribute("ticket", ticketsService.updateTicket(ticket));
+        return "ticket";
+    }
+
     @PostMapping("/create")
     public String createTicket(Ticket ticket, Model model){
         //localhost:8090/ticket/create

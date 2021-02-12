@@ -5,14 +5,14 @@ import java.util.List;
 
 public class Ticket {
     private int id;
-    private String project;
+    private Project project;
     private String subject;
     private String description;
-    private String reporter;
-    private String assignee;
-    private String status;
+    private User reporter;
+    private User assignee;
+    private Status status;
     private List<Byte> files;
-    private List<String> comments;
+    private List<Comment> comments;
 
     public Ticket() {
     }
@@ -25,11 +25,11 @@ public class Ticket {
         this.id = id;
     }
 
-    public String getProject() {
+    public Project getProject() {
         return project;
     }
 
-    public void setProject(String project) {
+    public void setProject(Project project) {
         this.project = project;
     }
 
@@ -49,19 +49,19 @@ public class Ticket {
         this.description = description;
     }
 
-    public String getReporter() {
+    public User getReporter() {
         return reporter;
     }
 
-    public void setReporter(String reporter) {
+    public void setReporter(User reporter) {
         this.reporter = reporter;
     }
 
-    public String getAssignee() {
+    public User getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(String assignee) {
+    public void setAssignee(User assignee) {
         this.assignee = assignee;
     }
 
@@ -73,20 +73,20 @@ public class Ticket {
         this.files = files;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
 
-    public List<String> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<String> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 

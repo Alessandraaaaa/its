@@ -8,15 +8,27 @@
 <body>
 <h1>Form</h1>
 
-<div>
-    <p>reporter: <input type="text" th:field="*{ticket.reporter}" /></p>
-    <p>project: <input type="text" th:field="*{ticket.project}" /></p>
-    <p>assignee: <input type="text" th:field="*{ticket.assignee}"/></p>
-    <p>status: <input type="text" th:field="*{ticket.status}" /></p>
-    <p>subject: <input type="text" th:field="*{ticket.subject}" /></p>
-    <p>description: <input type="text"  th:field="*{ticket.description}" /></p>
-    <p>comments: <textarea rows="4" cols="50" th:field="*{ticket.comments}" ></textarea></p>
-    <p>file: <input type="file" th:field="*{ticket.files}" /></p>
-</div>
+<form action="#" th:action="@{/ticket/update}" th:object="${ticket}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <input type="hidden" th:field="*{reporter.id}" />
+    <p>reporter: <input type="text" th:field="*{reporter.login}" /></p>
+    <input type="hidden" th:field="*{project.id}" />
+    <p>project: <input type="text" th:field="*{project.description}" /></p>
+    <input type="hidden" th:field="*{assignee.id}" />
+    <p>assignee: <input type="text" th:field="*{assignee.login}"/></p>
+    <input type="hidden" th:field="*{status.id}" />
+    <p>status: <input type="text" th:field="*{status.status}" /></p>
+    <p>subject: <input type="text" th:field="*{subject}" /></p>
+    <p>description: <input type="text"  th:field="*{description}" /></p>
+
+    <p>comments: </p>
+    <div th:each="comment, itemStat: ${ticket.comments}">
+        <td><input type="hidden" th:field="*{comments[__${itemStat.index}__].id}" /></td>
+        <td><input type="hidden" th:field="*{comments[__${itemStat.index}__].ticketId}" /></td>
+        <textarea rows="4" cols="50" th:field="*{comments[__${itemStat.index}__].text}" ></textarea>
+    </div>
+    <p>file: <input type="file" th:field="*{files}" /></p>
+    <p><input type="submit" value="Submit" /> </p>
+</form>
 </body>
 </html>
