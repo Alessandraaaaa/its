@@ -46,6 +46,22 @@ public class TicketsDao {
 
     }
 
+    public List<Ticket> getAllTickets() {
+        RowMapper<Ticket> rowMapper = (rs, rowNumber) -> mapTicket(rs);
+        List<Ticket> tickets = jdbcTemplate.query("SELECT t.id,t.subject,t.description, s.status, s.id as statusId," +
+                "p.description as project, p.id as projectId, a.login as assignee, a.id as assigneeId, r.login as reporter," +
+                " r.id as reporterId " +
+                "FROM Tickets as t \n" +
+                "LEFT JOIN status as s on s.id=t.status\n" +
+                "LEFT JOIN projects as p on  p.id=t.project_id\n" +
+                "LEFT JOIN users as r on r.id = t.reporter_id\n" +
+                "LEFT JOIN users as a on a.id = t.assignee_id\n", rowMapper);
+        for (Ticket ticket : tickets ) {
+            ticket.setComments(getTicketComments(ticket.getId()));
+        }
+        return tickets;
+    }
+
     private List<Comment> getTicketComments(int id) {
         RowMapper<Comment> rowMapper = (rs, rowNumber) -> mapComment(rs, id);
         List<Comment> tickets = jdbcTemplate.query("SELECT c.id, c.text " +

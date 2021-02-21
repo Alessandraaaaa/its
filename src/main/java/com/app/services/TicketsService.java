@@ -7,6 +7,8 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TicketsService {
 
@@ -73,4 +75,8 @@ public class TicketsService {
         }
         return true;
     }
+    public List<Ticket> getAllTickets(){
+        return ticketsDao.getAllTickets();
+    }
 }
+
