@@ -119,6 +119,15 @@ public class TicketsDao {
         return ticket;
     }
 
+    public Boolean updateAssignee(int id, int assigneeId){
+        String sql = "UPDATE  Tickets " +
+                "SET assignee_id =  ? " +
+                "WHERE id = ? ";
+        int rowsEffected = jdbcTemplate.update(sql, assigneeId, id );
+
+        return rowsEffected > 0 ? Boolean.TRUE : Boolean.FALSE;
+    }
+
     private void createComment(Comment comment) {
         String sql = "INSERT INTO Comments (ticket_id, text) " +
                 "VALUES (?, ?)";
