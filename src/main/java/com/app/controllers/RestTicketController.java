@@ -22,4 +22,9 @@ public class RestTicketController {
     public String getTicket(Model model){
         return new Gson().toJson(ticketsService.getAllTickets() );
     }
+
+    @GetMapping("/tickets/{id}")
+    public String getTicket(Model model, @PathVariable("id")int id){
+        return new Gson().toJson(ticketsService.getTicket(id) );
+    }
 }
