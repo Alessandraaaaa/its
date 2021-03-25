@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Choose user Ticket ${ticket.id}</title>
+</head>
+<body>
+    <script>
+        $(function() {
+             $('a').click(function(event) {
+                event.preventDefault();
+                var ticketId = $(this).attr('data-id')
+                $.ajax({url: $(this).attr('href'), type: "POST", success: function(result){
+                    window.location.replace("/ticket/" + ticketId);
+                }});
+            });
+        });
+    </script>
+    <h1>Form</h1>
+        <div th:each="user, itemStat: ${users}">
+            <td th:text="${user.login}" />
+            <td><a th:href="@{'/api/tickets/' + ${ticketId} + '/change_assignee/' + ${user.id}}"
+                   th:attr="data-id=${ticketId}">select user</a></td>
+        </div>
+</body>
+</html>

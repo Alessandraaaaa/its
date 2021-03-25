@@ -15,7 +15,7 @@
     <input type="hidden" th:field="*{project.id}" />
     <p>project: <input type="text" th:field="*{project.description}" /></p>
     <input type="hidden" th:field="*{assignee.id}" />
-    <p>assignee: <input type="text" th:field="*{assignee.login}"/></p>
+    <p>assignee: <input type="text" th:field="*{assignee.login}"/> <a th:href="@{'/users/' + ${ticket.id}}">assign user</a></p>
     <input type="hidden" th:field="*{status.id}" />
     <p>status: <input type="text" th:field="*{status.status}" /></p>
     <p>subject: <input type="text" th:field="*{subject}" /></p>
